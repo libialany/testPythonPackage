@@ -23,5 +23,5 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: elibialany 
-          repository-url: https://test.pypi.org/simple/
+          repository-url: https://test.pypi.org/legacy/
           password: ${{ secrets.pypi_password }}
