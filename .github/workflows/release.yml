@@ -20,7 +20,7 @@ jobs:
 
       - name: Publish package to PyPI
         if: github.repository == 'libialany/testPythonPackage' && github.event_name == 'push'
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
+          repository-url: https://test.pypi.org/simple/testpythonpackagelibialany==1.0.1
           password: ${{ secrets.pypi_password }}
