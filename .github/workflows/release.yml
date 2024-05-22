@@ -20,6 +20,10 @@ jobs:
 
       - name: Build package
         run: python -m build
+
+      - name: donde_estoy
+        run: ls
+
   pypi-publish:
     name: Upload release to PyPI
     runs-on: ubuntu-latest
