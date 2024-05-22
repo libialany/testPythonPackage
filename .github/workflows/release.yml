@@ -22,8 +22,30 @@ jobs:
         run: python -m build
 
       - name: listar_donde_estoy
-        run: ls
+        run: |
+        echo "PACKAGE_PATH=dist/*" >> env_vars.txt
+        echo "ARTIFACT_NAME=dist" >> env_vars.txt
 
       - name: donde_estoy
-        run: pwd
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-vars
+          path: env_vars.txt
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: listar_donde_estoy
+        run: |
+          source env_vars.txt
+          echo "PACKAGE_PATH=$PACKAGE_PATH" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
+
+      - name: donde_estoy
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.PACKAGE_PATH }}
+      - name: listar_donde_estoy
+        run: ls
