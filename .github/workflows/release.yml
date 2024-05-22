@@ -23,8 +23,8 @@ jobs:
 
       - name: listar_donde_estoy
         run: |
-        echo "PACKAGE_PATH=dist/*" >> env_vars.txt
-        echo "ARTIFACT_NAME=dist" >> env_vars.txt
+          echo "PACKAGE_PATH=dist/*" >> env_vars.txt
+          echo "ARTIFACT_NAME=dist" >> env_vars.txt
 
       - name: donde_estoy
         uses: actions/upload-artifact@v3
