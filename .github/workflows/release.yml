@@ -6,15 +6,27 @@ jobs:
   job_1:
     name: Add 3 and 7
     runs-on: ubuntu-latest
+    env:
+      PYTHON_VERSION: ${{ secrets.PYTHON_VERSION }}    
     steps:
-      - shell: bash
-        run: |
-          echo 23 > math-homework.txt
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ secrets.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ secrets.PYTHON_VERSION }}
+      
+      - name: Install dependencies
+        run: python -m pip install -U build
+
+      - name: Build package
+        run: python -m build
+
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v4
         with:
           name: homework_pre
-          path: math-homework.txt
+          path: dist
 
   job_2:
     name: Multiply by 9
@@ -27,4 +39,4 @@ jobs:
           name: homework_pre
       - shell: bash
         run: |
-          cat math-homework.txt
+          ls dist
