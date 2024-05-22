@@ -30,6 +30,8 @@ jobs:
 
   job_2:
     name: Multiply by 9
+    env:
+      TOKEN: ${{ secrets.pypi_password }}
     needs: job_1
     runs-on: ubuntu-latest
     steps:
@@ -38,6 +40,10 @@ jobs:
         with:
           name: homework_pre
           path: dist
-      - shell: bash
-        run: |
-          ls -lR
+      - name: Publish package to PyPI
+        if: env.TOKEN != '' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: elibialany 
+          repository-url: https://test.pypi.org/legacy/
+          password: ${{ secrets.pypi_password }}
