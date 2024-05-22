@@ -6,6 +6,8 @@ jobs:
   job_1:
     name: Add 3 and 7
     runs-on: ubuntu-latest
+    outputs:
+      my-key-exists: ${{ steps.my-key-check.outputs.defined }}
     env:
       PYTHON_VERSION: ${{ secrets.PYTHON_VERSION }}    
     steps:
@@ -20,7 +22,7 @@ jobs:
         run: python -m pip install -U build
 
       - name: Build package
-        run: python -m build
+        run: ls test
 
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v4
@@ -41,7 +43,7 @@ jobs:
           name: homework_pre
           path: dist
       - name: Publish package to PyPI
-        if: env.TOKEN != '' && github.event_name == 'push'
+        if: needs.job_1.result == 'success' &&  ${{ env.super_secret != '' }} && github.event_name == 'push'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: elibialany 
