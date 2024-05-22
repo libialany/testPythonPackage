@@ -39,4 +39,4 @@ jobs:
           name: homework_pre
       - shell: bash
         run: |
-          ls dist
+          ls 
