@@ -3,6 +3,19 @@ name: Build distribution
 on: [push]
 
 jobs:
+  check-secret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secret variable
+        env:
+          SECRET_VAR: ${{ secrets.SECRET_VAR }}
+        run: |
+          if [ -z "$SECRET_VAR" ]; then
+            echo "Secret variable is empty!"
+            exit 1
+          fi
+          echo "Secret variable is set!"
+
   job_1:
     name: Add 3 and 7
     runs-on: ubuntu-latest
