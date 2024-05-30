@@ -32,8 +32,8 @@ jobs:
 
   job-2:
     name: Multiply by 9
-    # env:
-    #   TOKEN: ${{ secrets.pypi_password }}
+    env:
+      TOKEN: ${{ secrets.PYPI_TOKEN }}
     needs: job_1
     runs-on: ubuntu-latest
     environment:
@@ -54,7 +54,7 @@ jobs:
           packages_dir: dist/
   #         user: elibialany 
   #         repository-url: https://test.pypi.org/legacy/
-  #         password: ${{ secrets.pypi_password }}
+          password: ${{ secrets.PYPI_TOKEN }}
   # pypi-publish:
   #   needs: ['build']
   #   name: upload release to PyPI
