@@ -1,6 +1,6 @@
 name: Build distribution
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   job_1:
