@@ -32,10 +32,15 @@ jobs:
 
   job-2:
     name: Multiply by 9
-    env:
-      TOKEN: ${{ secrets.pypi_password }}
+    # env:
+    #   TOKEN: ${{ secrets.pypi_password }}
     needs: job_1
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/testpythonpackagelibialany  # Replace <package-name> with your PyPI project name
+    permissions:
+      id-token: write  #
     steps:
       - name: Download math result for job 1
         uses: actions/download-artifact@v4
@@ -43,9 +48,21 @@ jobs:
           name: homework_pre
           path: dist
       - name: Publish package to PyPI
-        if: needs.job_1.result == 'success' &&  ${{ env.super_secret != '' }} && github.event_name == 'push'
         uses: pypa/gh-action-pypi-publish@release/v1
+
         with:
-          user: elibialany 
-          repository-url: https://test.pypi.org/legacy/
-          password: ${{ secrets.pypi_password }}
+          packages_dir: dist/
+  #         user: elibialany 
+  #         repository-url: https://test.pypi.org/legacy/
+  #         password: ${{ secrets.pypi_password }}
+  # pypi-publish:
+  #   needs: ['build']
+  #   name: upload release to PyPI
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #   steps:
+  #     - name: Publish package distributions to PyPI
+  #       uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         packages_dir: artifact/
