@@ -18,6 +18,7 @@ jobs:
 
   job_1:
     name: Add 3 and 7
+    needs: check-secret
     runs-on: ubuntu-latest
     outputs:
       my-key-exists: ${{ steps.my-key-check.outputs.defined }}    
